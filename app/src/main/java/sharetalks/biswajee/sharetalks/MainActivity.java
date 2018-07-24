@@ -1,6 +1,11 @@
 package sharetalks.biswajee.sharetalks;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    private void addNotification() {
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle("Sharetalk Mantra")
+                        .setContentText("Plan your business today. Check out your stocks.");
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
+        Toast.makeText(this, "Notification Published", Toast.LENGTH_SHORT).show();
+    }
+
+
     protected void onStart() {
         stock_id = (EditText) findViewById(R.id.stock_id);
         search = (Button) findViewById(R.id.search_btn);
@@ -47,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         default_text = (TextView) findViewById(R.id.default_text);
         open_val = (TextView) findViewById(R.id.open_val);
         close_val = (TextView) findViewById(R.id.close_val);
+        addNotification();
 
         super.onStart();
         search.setOnClickListener(new View.OnClickListener() {
