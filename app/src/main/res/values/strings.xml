@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sharetalks - Quest your trading</string>
+    <string name="app_name">Sharetalk - Quest your trading</string>
     <string name="name_stock">Please enter the stock name : </string>
     <string name="results">Results :</string>
     <string name="wait">Please wait while we fetch the data</string>

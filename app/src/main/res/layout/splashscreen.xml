@@ -20,12 +20,15 @@
         android:background="#ffc7a0"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="One moment please..."
+        android:textColor="@color/white"
         android:textAlignment="center"
-        android:textSize="16sp"
-        android:paddingTop="5dp"
-        android:layout_marginStart="120dp"/>
+        android:textSize="20sp"
+        android:paddingTop="25dp"
+        android:background="#ffc7a0"
+        android:paddingLeft="45dp"
+        />
 
 </LinearLayout>
