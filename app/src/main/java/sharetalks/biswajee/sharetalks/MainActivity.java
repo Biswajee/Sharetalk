@@ -1,5 +1,6 @@
 package sharetalks.biswajee.sharetalks;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -22,6 +23,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+
+    // Use one of the two functions below for notifications...
+
     private void addNotification() {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
@@ -57,12 +63,26 @@ public class MainActivity extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
 
+
         // Add as notification
+
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
         Toast.makeText(this, "Notification Published", Toast.LENGTH_SHORT).show();
     }
 
+
+
+
+     private void notificationTimer() {
+         AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+         Intent intent = new Intent(this, AlarmReceiver.class);
+         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+         // set for 30 seconds later
+         alarmMgr.set(AlarmManager.RTC, Calendar.getInstance().getTimeInMillis() + 30000, alarmIntent);
+         Toast.makeText(this, "Notification timer started", Toast.LENGTH_SHORT).show();
+
+     }
 
     protected void onStart() {
         stock_id = (EditText) findViewById(R.id.stock_id);
@@ -72,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         open_val = (TextView) findViewById(R.id.open_val);
         close_val = (TextView) findViewById(R.id.close_val);
         addNotification();
+        notificationTimer();
 
         super.onStart();
         search.setOnClickListener(new View.OnClickListener() {
