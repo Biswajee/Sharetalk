@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,7 +26,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
 
      }
 
+    private void hideSoftKeyboard(View v){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     protected void onStart() {
         stock_id = (EditText) findViewById(R.id.stock_id);
         search = (Button) findViewById(R.id.search_btn);
@@ -99,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String stock_data = stock_id.getText().toString();
+                hideSoftKeyboard(v);
                 String url_path = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + stock_data.toUpperCase() + "&interval=1min&outputsize=compact&apikey=PJFWQSMODLRUL9F9";
                 default_text.setText("Connecting to internet...");
                 Toast.makeText(getApplicationContext(), "Searching for " + stock_data.toUpperCase(), Toast.LENGTH_SHORT).show();
